@@ -9,10 +9,14 @@ on:
 jobs:
   build:
 
-    runs-on: ${{matrix.os}}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_REGION: us-east-1
+      AWS_ACCOUNT_ROLE: assume-admin-denali
+      AWS_ACCOUNT_ID: ${{ secrets.DIV_AWS_ACCOUNT_ID }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.DIV_AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.DIV_AWS_SECRET_ACCESS_KEY }}
   
     steps:
     - uses: actions/checkout@v2
@@ -30,3 +34,19 @@ jobs:
       
     - name: Test
       run: dotnet test --no-build --verbosity normal
+
+    - name: Get ECR Login for Assumed Account
+      uses: konsentus/action.assume-ecr-login@master
+      id: ecr-login-assumed
+
+    - name: "Login to AWS ECR"
+      run: ${{ steps.ecr-login-assumed.outputs.login }}
+
+    - name: "Build, tag, and push the image to Amazon ECR"
+      run: |
+        # Build a docker container and push it to ECR
+        docker build -t 434153375648.dkr.ecr.us-east-1.amazonaws.com/test-savita:0.2 .
+        echo "Pushing image to ECR..."
+        docker push 434153375648.dkr.ecr.us-east-1.amazonaws.com/test-savita:0.2
+        echo "::set-output name=image::434153375648.dkr.ecr.us-east-1.amazonaws.com/test-savita:0.2"
+        
