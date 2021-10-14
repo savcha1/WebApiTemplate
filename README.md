@@ -51,3 +51,4 @@ Use GitHub Actions to push image to AWS ECR (under assumed role to Denali AWS ac
 - [x] Dockerize
 - [x] Change CI to Push to AWS ECR
 - [ ] CD to AWS Fargate
+- [ ] Use Terraform for IaC
