@@ -17,7 +17,7 @@ jobs:
       AWS_ACCOUNT_ID: ${{ secrets.DIV_AWS_ACCOUNT_ID }}
       AWS_ACCESS_KEY_ID: ${{ secrets.DIV_AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.DIV_AWS_SECRET_ACCESS_KEY }}
-      ECR_REGISTRY: ${{AWS_ACCOUNT_ID}}.dkr.ecr.us-east-1.amazonaws.com
+      ECR_REGISTRY: ${{secrets.DIV_AWS_ACCOUNT_ID}}.dkr.ecr.us-east-1.amazonaws.com
       ECR_REPO: test-savita
       IMAGE_VERSION: 0.3
   
