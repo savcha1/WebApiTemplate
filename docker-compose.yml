@@ -1,0 +1,11 @@
+version: '3.4'
+
+services:
+  api:
+    container_name: api-template-dev        # give specific name to the container built for this service
+    build: .                                # build image from Dockerfile in current folder
+    image: api-templates:0.1                # tag the built image with this name (this could be tagged with the ECR once ready to go to cloud)
+    ports:
+      - 5096:5000
+      - 5097:5001
+      - 8096:80
