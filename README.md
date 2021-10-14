@@ -27,5 +27,6 @@ This is a .NET 5.0 webapi template project. Experimenting with GitHub CI/CD.
 - [x] Create webapi template project
 - [x] Push to GitHub
 - [ ] Create CI pipeline
+- [ ] Dockerize
 - [ ] Push to AWS ECR
 - [ ] CD to AWS Fargate
