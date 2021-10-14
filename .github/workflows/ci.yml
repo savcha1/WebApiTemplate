@@ -43,13 +43,13 @@ jobs:
       run: ${{ steps.ecr-login-assumed.outputs.login }}
 
     - name: "Build, tag, and push the image to Amazon ECR"
+      run: |
+        # Build a docker container and push it to ECR
+        docker build -t $ECR_REGISTRY/$ECR_REPO:$IMAGE_VERSION .
+        echo "Pushing image to ECR..."
+        docker push $ECR_REGISTRY/$ECR_REPO:$IMAGE_VERSION
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPO:$IMAGE_VERSION"
       env:
         ECR_REGISTRY: ${{secrets.DIV_AWS_ACCOUNT_ID}}.dkr.ecr.us-east-1.amazonaws.com
         ECR_REPO: test-savita
         IMAGE_VERSION: 0.3
-      run: |
-        # Build a docker container and push it to ECR
-        docker build -t ${{ECR_REGISTRY}}/${{ECR_REPO}}:${{IMAGE_VERSION}} .
-        echo "Pushing image to ECR..."
-        docker push ${{ECR_REGISTRY}}/${{ECR_REPO}}:${{IMAGE_VERSION}}
-        echo "::set-output name=image::${{ECR_REGISTRY}}/${{ECR_REPO}}:${{IMAGE_VERSION}}"
