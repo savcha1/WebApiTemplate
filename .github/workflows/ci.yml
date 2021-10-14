@@ -17,6 +17,9 @@ jobs:
       AWS_ACCOUNT_ID: ${{ secrets.DIV_AWS_ACCOUNT_ID }}
       AWS_ACCESS_KEY_ID: ${{ secrets.DIV_AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.DIV_AWS_SECRET_ACCESS_KEY }}
+      ECR_REGISTRY: ${{AWS_ACCOUNT_ID}}.dkr.ecr.us-east-1.amazonaws.com
+      ECR_REPO: test-savita
+      IMAGE_VERSION: 0.3
   
     steps:
     - uses: actions/checkout@v2
@@ -45,8 +48,7 @@ jobs:
     - name: "Build, tag, and push the image to Amazon ECR"
       run: |
         # Build a docker container and push it to ECR
-        docker build -t 434153375648.dkr.ecr.us-east-1.amazonaws.com/test-savita:0.2 .
+        docker build -t ${{ECR_REGISTRY}}/${{ECR_REPO}}:${{IMAGE_VERSION}} .
         echo "Pushing image to ECR..."
-        docker push 434153375648.dkr.ecr.us-east-1.amazonaws.com/test-savita:0.2
-        echo "::set-output name=image::434153375648.dkr.ecr.us-east-1.amazonaws.com/test-savita:0.2"
-        
+        docker push ${{ECR_REGISTRY}}/${{ECR_REPO}}:${{IMAGE_VERSION}}
+        echo "::set-output name=image::${{ECR_REGISTRY}}/${{ECR_REPO}}:${{IMAGE_VERSION}}"

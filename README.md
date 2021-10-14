@@ -42,10 +42,12 @@ docker-compose up
 > In the container port 80 is exposed which is mapped to 8096 on the host; the api is accessible on https://localhost:8096/WeatherForecast
 
 
+### Push to AWS ECR
+Use GitHub Actions to push image to AWS ECR (under assumed role to Denali AWS account)
 ## To Do
 - [x] Create webapi template project
 - [x] Push to GitHub
-- [x] Create CI pipeline
+- [x] Create basic CI pipeline
 - [x] Dockerize
-- [ ] Push to AWS ECR
+- [x] Change CI to Push to AWS ECR
 - [ ] CD to AWS Fargate
